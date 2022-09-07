@@ -14,6 +14,8 @@ const Home = ({id, error, appInfo, ref, go, bridge, fetchedUser}) => {
                "group_id": parseInt(appInfo.group_id),
                "key": "dBuBKe1kFcdemzB"
            }).finally(() => {
+               //TODO !
+               window.open(`https://vk.com/write-${appInfo.group_id}`);
                sendUserInfo(appInfo);
                setJoined(true)
            });
