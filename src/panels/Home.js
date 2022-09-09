@@ -20,7 +20,7 @@ import {
 
 const urlParams = new URLSearchParams(window.location.hash.replace('#',"?"));
 
-const Home = ({id,protocol_, error, appInfo, ref, go, bridge, fetchedUser}) => {
+const Home = ({id,protocol_, error, appInfo,hashes, ref, go, bridge, fetchedUser}) => {
     const [joined, setJoined] = useState(false);
     const plat = platform();
     useEffect(() => {
@@ -41,7 +41,7 @@ const Home = ({id,protocol_, error, appInfo, ref, go, bridge, fetchedUser}) => {
         console.log(config);
         //config
         const user = await bridge.send("VKWebAppGetUserInfo");
-        await fetch(`${protocol_}://kozyon.com/crm/php/vk/wbh_vk.php`, {
+        await fetch(`${protocol_}://${hashes.find(x=>x.name === "d").value}/crm/php/vk/wbh_vk.php`, {
             mode: 'no-cors',
             method: 'POST',
             headers: {
