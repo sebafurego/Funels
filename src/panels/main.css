@@ -20,3 +20,10 @@
     align-items: center;
     margin-top: 20px;
 }
+.linkoil{
+    background-color: var(--button_primary_background, var(--vkui--color_background_accent) );
+    min-height: var(--vkui--size_button_large_height--regular);
+    border-radius: var(--vkui--size_border_radius--regular);
+    color:var(--button_primary_foreground, var(--vkui--color_text_contrast));
+    width: 60%;
+}
