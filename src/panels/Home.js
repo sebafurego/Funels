@@ -18,14 +18,16 @@ import {
     Link
 } from '@vkontakte/vkui';
 
-const urlParams = new URLSearchParams(window.location.hash.replace('#',"?"));
-
+let urlParams = new URL(window.location);
+let ref___;
+urlParams = urlParams.search.split("&")
+ref___ = urlParams.find(x=>x.indexOf("vk_ref") !== -1).split("=")[1]
 const Home = ({id,protocol_, error, appInfo,hashes, ref, go, bridge, fetchedUser}) => {
     const [joined, setJoined] = useState(false);
     const plat = platform();
     useEffect(() => {
        if(appInfo){
-           bridge.send("VKWebAppAllowMessagesFromGroup", {
+          /* bridge.send("VKWebAppAllowMessagesFromGroup", {
                "group_id": parseInt(appInfo.group_id),
                "key": "dBuBKe1kFcdemzB"
            }).finally(() => {
@@ -33,7 +35,7 @@ const Home = ({id,protocol_, error, appInfo,hashes, ref, go, bridge, fetchedUser
                window.open(`https://vk.com/write-${appInfo.group_id}`);
                sendUserInfo(appInfo);
                setJoined(true)
-           });
+           });*/
        }
     }, [appInfo])
     const sendUserInfo = async (config) => {
@@ -51,10 +53,10 @@ const Home = ({id,protocol_, error, appInfo,hashes, ref, go, bridge, fetchedUser
                 user,
                 // Из текущего url вытащит id клиента и id тунеля.
                 // Если id клиента не понадобится удали строку.
-                ref: ref,
+                ref: `${hashes.find(x=>x.name === "ref").value}`,
                 secret: config.secret,
-                client_id: urlParams.get("client_id"),
-                tunnel_id: urlParams.get("tunnel_id"),
+/*                client_id: urlParams.get("client_id"),
+                tunnel_id: urlParams.get("tunnel_id"),*/
             })
         });
     };

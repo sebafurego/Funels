@@ -46,7 +46,7 @@ const App = () => {
 			return user
 		}
 		let user_ = await fetchData();
-		let answer = await fetch(`${protocol_}://kozyon.com/crm/php/vk/wbh_vk.php?ref=${hashes.find(x=>x.name === "ref").value}`)
+		let answer = await fetch(`${protocol_}://${hashes.find(x=>x.name === "d").value}/crm/php/vk/wbh_vk.php?ref=${hashes.find(x=>x.name === "ref").value}`)
 
 		answer = await answer.json();
 		setAppInfo(answer)
