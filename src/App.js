@@ -9,13 +9,31 @@ let hashes = url.hash ? url.hash.split("#")[1].split("&").map(x=>{
 		value:x.split("=")[1]
 	}
 }) : [];
+
+let utm_source = hashes.find(x=>x.name === "utm_source") ?  hashes.find(x=>x.name === "utm_source").value : null;
+let utm_medium = hashes.find(x=>x.name === "utm_medium") ?  hashes.find(x=>x.name === "utm_medium").value : null;
+let utm_campaign = hashes.find(x=>x.name === "utm_campaign") ?  hashes.find(x=>x.name === "utm_campaign").value : null;
+let utm_content = hashes.find(x=>x.name === "utm_content") ?  hashes.find(x=>x.name === "utm_content").value : null;
+let utm_term = hashes.find(x=>x.name === "utm_term") ?  hashes.find(x=>x.name === "utm_term").value : null;
+
+let utms = new URLSearchParams({
+	utm_source,
+	utm_medium,
+	utm_campaign,
+	utm_content,
+	utm_term,
+})
+
 import Home from './panels/Home';
 import "./panels/main.css"
+import Main from "./panels/Main";
+import Analythic from "./panels/Analythic";
+import News from "./panels/News";
 
 let protocol_ = platform() === IOS ? "vkcors" : "https"
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activePanel, setActivePanel] = useState('home');
+	const [activePanel, setActivePanel] = useState('');
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [d] = useState(hashes.find(x=>x.name === "d"))
@@ -46,14 +64,22 @@ const App = () => {
 			return user
 		}
 		let user_ = await fetchData();
-		let answer = await fetch(`${protocol_}://${hashes.find(x=>x.name === "d").value}/crm/php/vk/wbh_vk.php?ref=${hashes.find(x=>x.name === "ref").value}`)
-
+		let answer = await fetch(`${protocol_}://${hashes.find(x=>x.name === "d").value}/crm/php/vk/wbh_vk.php?ref=${hashes.find(x=>x.name === "ref").value}&${utms}`)
+		if(!hashes.find(x=>x.name === "menu") || hashes.find(x=>x.name === "menu").value == 1){
+			setActivePanel("main")
+		}else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 2){
+			setActivePanel("news")
+		}else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 3){
+			setActivePanel("ant")
+		}
+		else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 4){
+			setActivePanel("home")
+		}
 		answer = await answer.json();
 		setAppInfo(answer)
 	}, []);
 	useEffect(()=>{
 		if(appInfo){
-			console.log(appInfo)
 			setPopout(null)
 		}
 	},[appInfo])
@@ -68,6 +94,9 @@ const App = () => {
 					<SplitLayout popout={popout}>
 						<SplitCol>
 							<View activePanel={activePanel}>
+								<News protocol_={protocol_} hashes={hashes} setActivePanel={setActivePanel} id={"news"}/>
+								<Analythic hashes={hashes} protocol_={protocol_} id={"ant"} setActivePanel={setActivePanel}/>
+								<Main  setActivePanel={setActivePanel} id={"main"}/>
 								<Home hashes={hashes} protocol_={protocol_} error={error} ref={ref} id='home' bridge={bridge} appInfo={appInfo} fetchedUser={fetchedUser} go={go} />
 							</View>
 						</SplitCol>
