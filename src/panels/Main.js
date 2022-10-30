@@ -11,6 +11,7 @@ const Main = ({id,setActivePanel}) =>{
                     Партнерская программа MetaFunnels
                 </Title>
                 <div className={"main_buttons"}>
+                    <Button onClick={()=>setActivePanel("crm")} size={"l"} stretched>CRM</Button>
                     <Button onClick={()=>setActivePanel("news")} mode={"primary"} size={"l"} stretched>Новости партнера</Button>
                     <Button onClick={()=>setActivePanel("ant")} size={"l"} stretched>Аналитика партнера</Button>
                     <Button onClick={()=>setActivePanel("home")} size={"l"} stretched>Воронка партнера</Button>

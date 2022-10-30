@@ -29,6 +29,7 @@ import "./panels/main.css"
 import Main from "./panels/Main";
 import Analythic from "./panels/Analythic";
 import News from "./panels/News";
+import Crm from "./panels/Crm";
 
 let protocol_ = platform() === IOS ? "https"/*"vkcors"*/ : "https"
 const App = () => {
@@ -71,9 +72,10 @@ const App = () => {
 			setActivePanel("news")
 		}else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 3){
 			setActivePanel("ant")
-		}
-		else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 4){
+		} else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 4){
 			setActivePanel("home")
+		} else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 5){
+			setActivePanel("crm")
 		}
 		answer = await answer.json();
 		setAppInfo(answer)
@@ -94,6 +96,7 @@ const App = () => {
 					<SplitLayout popout={popout}>
 						<SplitCol>
 							<View activePanel={activePanel}>
+								<Crm protocol_={protocol_} hashes={hashes} setActivePanel={setActivePanel} id={"crm"}/>
 								<News protocol_={protocol_} hashes={hashes} setActivePanel={setActivePanel} id={"news"}/>
 								<Analythic hashes={hashes} protocol_={protocol_} id={"ant"} setActivePanel={setActivePanel}/>
 								<Main  setActivePanel={setActivePanel} id={"main"}/>
