@@ -30,7 +30,7 @@ import Main from "./panels/Main";
 import Analythic from "./panels/Analythic";
 import News from "./panels/News";
 
-let protocol_ = platform() === IOS ? "vkcors" : "https"
+let protocol_ = platform() === IOS ? "https"/*"vkcors"*/ : "https"
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
 	const [activePanel, setActivePanel] = useState('');
