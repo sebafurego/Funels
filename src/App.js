@@ -44,7 +44,7 @@ const App = () => {
 	const [appInfo,setAppInfo] = useState(null)
 	const [error,setError] = useState(false)
 	useEffect(async () => {
-		if((!hashes.find(x=>x.name === "d") || !hashes.find(x=>x.name === "d").value) || (!hashes.find(x=>x.name === "ref") || !hashes.find(x=>x.name === "ref").value)){
+		if((!hashes.find(x=>x.name === "d") || !hashes.find(x=>x.name === "d").value) || (!hashes.find(x=>x.name === "d") || !hashes.find(x=>x.name === "d").value) || (!hashes.find(x=>x.name === "ref") || !hashes.find(x=>x.name === "ref").value)){
 			//setError(true)
 			hashes.push({
 				name:"d",
@@ -70,18 +70,24 @@ const App = () => {
 		let user_ = await fetchData();
 		let answer = await fetch(`${protocol_}://${hashes.find(x=>x.name === "d").value}/crm/php/vk/wbh_vk.php?ref=${hashes.find(x=>x.name === "ref").value}&${utms}`)
 		answer = await answer.json();
-		global_answer = answer;
-		if(!hashes.find(x=>x.name === "menu") || hashes.find(x=>x.name === "menu").value == 1){
-			setActivePanel("main")
-		}else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 2){
-			setActivePanel("news")
-		}else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 3){
-			setActivePanel("ant")
-		} else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 4){
-			setActivePanel("home")
-		} else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 5){
-			setActivePanel("crm")
+		var current_screen = answer['current_screen'];
+		var pages = {
+			1:"main",
+			2:"news",
+			3:"ant",
+			4:"home",
+			5:"crm",
 		}
+		if(!current_screen||current_screen==undefined){
+			//main news ant home crm
+			current_screen = "main";
+		} else {
+
+		}
+		if(hashes.find(x=>x.name === "menu")){
+			current_screen = pages[hashes.find(x=>x.name === "menu").value];
+		}
+		setActivePanel(current_screen);
 
 		setAppInfo(answer)
 	}, []);
