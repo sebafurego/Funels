@@ -35,9 +35,13 @@
     align-items: center;
     row-gap: 20px;
 }
-.logo_img{
-    width: 200px;
-}
+.logo_img_w{width:120px;}
+.logo_img{width: 120px;position: absolute;margin: 0 auto;left: 0;right: 0;}
+.metalogo {}
+.metalogo .cls-1 {fill: #fff;}
+.bgerlogo {fill: #007bff;}
+
+
 .main_buttons{
     width: 80%;
     display: flex;
@@ -65,10 +69,18 @@
     flex-direction: column;
     row-gap: 5px;
 }
-.block_d img{
-    width: 100%;
-    border-radius: 25px;
-}
+.moderate_area .mesmode{text-align: center;font-size: 14px;max-width: 300px;margin: 0 auto 10px;}
+.moderate_area .iframe_youtube {position: relative;overflow: hidden;border-radius: 10px;}
+.moderate_area .iframe_youtube:before {content:"";padding-top:56.5%;display:block;}
+.moderate_area iframe {width: 100%;position: absolute;top: 0;    height: 100%;}
+.moderate_area {background: #ff00003b;border-radius: 10px;padding: 10px;}
+body {    background: #fff;}
+.text-muted {opacity:0.6;}
+.area_login {}
+.area_crm {}
+.hidden {display:none;}
+.form_error {margin: 0 15px;background: #ffe3e3;color: red;border-radius: 5px;padding: 10px;}
+.block_d img{width: 100%;border-radius: 10px;border: 1px solid #11111112;}
 .block_d .span_date{
     color:gray;
     font-weight: 600;

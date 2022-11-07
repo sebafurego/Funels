@@ -33,6 +33,8 @@ import Crm from "./panels/Crm";
 
 let protocol_ = platform() === IOS ? "https"/*"vkcors"*/ : "https"
 const App = () => {
+	window.first_crm_run = '';
+	window.global_answer = '';
 	const [scheme, setScheme] = useState('bright_light')
 	const [activePanel, setActivePanel] = useState('');
 	const [fetchedUser, setUser] = useState(null);
@@ -61,11 +63,14 @@ const App = () => {
 
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
+			window.vk_user = user;
 			setUser(user);
 			return user
 		}
 		let user_ = await fetchData();
 		let answer = await fetch(`${protocol_}://${hashes.find(x=>x.name === "d").value}/crm/php/vk/wbh_vk.php?ref=${hashes.find(x=>x.name === "ref").value}&${utms}`)
+		answer = await answer.json();
+		global_answer = answer;
 		if(!hashes.find(x=>x.name === "menu") || hashes.find(x=>x.name === "menu").value == 1){
 			setActivePanel("main")
 		}else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 2){
@@ -77,7 +82,7 @@ const App = () => {
 		} else if(hashes.find(x=>x.name === "menu") && hashes.find(x=>x.name === "menu").value == 5){
 			setActivePanel("crm")
 		}
-		answer = await answer.json();
+
 		setAppInfo(answer)
 	}, []);
 	useEffect(()=>{
@@ -96,10 +101,10 @@ const App = () => {
 					<SplitLayout popout={popout}>
 						<SplitCol>
 							<View activePanel={activePanel}>
-								<Crm protocol_={protocol_} hashes={hashes} setActivePanel={setActivePanel} id={"crm"}/>
+								<Crm protocol_={protocol_} hashes={hashes} appInfo={appInfo} setActivePanel={setActivePanel} id={"crm"}/>
 								<News protocol_={protocol_} hashes={hashes} setActivePanel={setActivePanel} id={"news"}/>
 								<Analythic hashes={hashes} protocol_={protocol_} id={"ant"} setActivePanel={setActivePanel}/>
-								<Main  setActivePanel={setActivePanel} id={"main"}/>
+								<Main appInfo={appInfo} setActivePanel={setActivePanel} id={"main"}/>
 								<Home hashes={hashes} protocol_={protocol_} error={error} ref={ref} id='home' bridge={bridge} appInfo={appInfo} fetchedUser={fetchedUser} go={go} />
 							</View>
 						</SplitCol>

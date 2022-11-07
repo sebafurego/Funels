@@ -18,7 +18,7 @@ const Analythic = ({id,setActivePanel,protocol_,hashes}) =>{
         <View activePanel={id} popout={popout}>
             <Panel id={id}>
                 <Div className={"div_d"}>
-                    <img style={{width:150}} className={"logo_img"} src={"https://kozyon.com/crm/content/2022/10/logo.png"}/>
+                    <div className={"logo_img_w"}><div className={"logo_img"}/>{logoMt()}</div>
                     <div onClick={()=>setActivePanel("main")} className={"div_back"}>
                         <Icon20ArrowLeftOutline/>
                         <span>Вернуться назад</span>
